@@ -1,0 +1,56 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-festus5531}
+      POSTGRES_DB: FPFK
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"   # optional: lets you connect a local DB client too
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      # Overrides the DATABASE_URL in .env so it points at the "db" service,
+      # not localhost, since each container has its own network namespace.
+      DATABASE_URL: postgres://postgres:${DB_PASSWORD:-festus5531}@db:5432/FPFK
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - backend_uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    command: node --watch server.js
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
+  backend_uploads:
+  

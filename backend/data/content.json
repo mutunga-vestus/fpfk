@@ -1,0 +1,111 @@
+{
+  "home": {
+    "heroImage": "/uploads/1784401270991-302162261.jpg",
+    "heroTitle": "Welcome to\nFPFK kitengela",
+    "heroSubtitle": "Where faith meets community",
+    "ctaPrimary": "Join Us This Sunday",
+    "ctaSecondary": "Watch Latest Sermon",
+    "features": [
+      {
+        "title": "Sunday Services",
+        "desc": "9:00 AM & 1:00 PM"
+      },
+      {
+        "title": "All Are Welcome",
+        "desc": "No perfect people allowed"
+      },
+      {
+        "title": "Live Online",
+        "desc": "Join from anywhere"
+      },
+      {
+        "title": "",
+        "desc": ""
+      }
+    ]
+  },
+  "about": {
+    "title": "FPFK",
+    "subtitle": "A community of believers growing in faith together since 2005.",
+    "story": "FPFK Church was founded with a simple mission: to love God and love people. What started as a small gathering has grown into a vibrant community that spans generations.",
+    "beliefs": "We believe the Bible is the inspired Word of God. We believe in the power of prayer, the importance of community, and the call to serve others as Jesus did."
+  },
+  "ministries": {
+    "title": "Our Ministries",
+    "subtitle": "Find your place to serve and grow",
+    "items": [
+      {
+        "title": "Children",
+        "desc": "learn more about jesus"
+      },
+      {
+        "title": "Youth",
+        "desc": "Helping teens discover their purpose in Christ"
+      },
+      {
+        "title": "Small Groups",
+        "desc": "Life-changing relationships in homes across the city"
+      },
+      {
+        "title": "Worship",
+        "desc": "Using our gifts to lead others into God's presence"
+      },
+      {
+        "title": "Missions",
+        "desc": "Taking the Gospel to our city and the nations"
+      },
+      {
+        "title": "Care Ministry",
+        "desc": "Supporting families through life's challenges"
+      }
+    ]
+  },
+  "sermons": {
+    "title": "Sermons",
+    "items": [
+      {
+        "series": "SERIES 2026",
+        "title": "The Power of Prayer",
+        "speaker": "Pastor Michael Thompson",
+        "date": "July 13, 2026",
+        "duration": "42 min",
+        "videoUrl": ""
+      }
+    ]
+  },
+  "events": {
+    "title": "Upcoming Events",
+    "subtitle": "Come be part of what God is doing",
+    "items": [
+      {
+        "date": "JULY 25 • 6:00 PM",
+        "title": "Summer Family Picnic",
+        "desc": "Bring the whole family for food, games, and fellowship at Riverside Park.",
+        "buttonLabel": "Register"
+      }
+    ]
+  },
+  "connect": {
+    "title": "Connect With Us",
+    "subtitle": "We'd love to meet you"
+  },
+  "give": {
+    "title": "Give to FPFK Kitengela",
+    "subtitle": "Malachi 3:10–11 Bring the whole tithe into the storehouse, that there may be food in my house. Test me in this,” says the Lord Almighty, “and see if I will not throw open the floodgates of heaven and pour out so much blessing that there will not be room enough to store it. I will prevent pests from devouring your crops, and the vines in your fields will not drop their fruit before it is ripe,” says the Lord Almighty",
+    "note": "Every gift, big or small, helps us serve our community and share the Gospel.",
+    "givingTypes": [
+      { "label": "Tithe" },
+      { "label": "Offering" },
+      { "label": "Sacrifice" },
+      { "label": "Building Fund" },
+      { "label": "Missions" }
+    ],
+    "mpesaPaybill": "123456",
+    "mpesaAccountNote": "Use your full name as the Account Number",
+    "bankName": "Equity Bank",
+    "bankAccountName": "FPFK Kitengela",
+    "bankAccountNumber": "0123456789",
+    "bankBranch": "Kitengela Branch",
+    "bankSwift": "EQBLKENA"
+  }
+}
