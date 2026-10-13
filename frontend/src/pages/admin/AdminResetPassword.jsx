@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const API_URL = 'http://localhost:4000/api';
+const API_URL = '/api';
 
 export default function AdminResetPassword() {
   const [password, setPassword] = useState('');
@@ -50,11 +50,11 @@ export default function AdminResetPassword() {
   if (done) {
     return (
       <div className="max-w-sm mx-auto px-6 py-24 text-center">
-        <h1 className="text-3xl font-bold mb-6">Password Updated</h1>
-        <p className="text-gray-700 mb-6">You can now log in with your new password.</p>
+        <h1 className="text-3xl font-bold mb-6 text-brand-fg">Password Updated</h1>
+        <p className="text-brand-fg mb-6">You can now log in with your new password.</p>
         <button
           onClick={() => navigate('/admin/login')}
-          className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700"
+          className="bg-brand text-white px-6 py-3 rounded-xl font-semibold hover:bg-brand-deep"
         >
           Go to Login
         </button>
@@ -64,32 +64,32 @@ export default function AdminResetPassword() {
 
   return (
     <div className="max-w-sm mx-auto px-6 py-24">
-      <h1 className="text-3xl font-bold mb-8 text-center">Reset Password</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center text-brand-fg">Reset Password</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="password"
           placeholder="New password (min. 8 characters)"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl"
+          className="w-full px-4 py-3 bg-brand-dark border border-brand-border rounded-xl text-brand-fg placeholder:text-brand-muted focus:outline-none focus:ring-2 focus:ring-brand/30"
         />
         <input
           type="password"
           placeholder="Confirm new password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl"
+          className="w-full px-4 py-3 bg-brand-dark border border-brand-border rounded-xl text-brand-fg placeholder:text-brand-muted focus:outline-none focus:ring-2 focus:ring-brand/30"
         />
-        {error && <p className="text-red-600 text-sm">{error}</p>}
+        {error && <p className="text-red-400 text-sm">{error}</p>}
         <button
           disabled={submitting}
-          className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 disabled:opacity-50"
+          className="w-full bg-brand text-white py-3 rounded-xl font-semibold hover:bg-brand-deep disabled:opacity-50"
         >
           {submitting ? 'Saving...' : 'Set New Password'}
         </button>
       </form>
       <div className="text-center mt-6 text-sm">
-        <Link to="/admin/login" className="text-blue-600 hover:underline">
+        <Link to="/admin/login" className="text-brand hover:underline">
           Back to login
         </Link>
       </div>

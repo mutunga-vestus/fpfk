@@ -28,7 +28,7 @@ function AppLayout() {
   const announcementLink = content?.home?.announcementLink?.trim();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-brand-dark text-brand-fg">
       {!isAdminRoute && <Navbar />}
 
       {!isAdminRoute && announcement && (

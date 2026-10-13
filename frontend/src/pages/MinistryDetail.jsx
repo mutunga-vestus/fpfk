@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useContent } from '../context/ContentContext';
 import { slugify } from '../utils/slugify';
 
-const BACKEND_URL = 'http://localhost:4000';
+const BACKEND_URL = '';
 
 export default function MinistryDetail() {
   const { slug } = useParams();
@@ -17,8 +17,8 @@ export default function MinistryDetail() {
   if (!ministry) {
     return (
       <div className="max-w-3xl mx-auto px-6 py-24 text-center">
-        <h1 className="text-3xl font-bold mb-4">Ministry not found</h1>
-        <Link to="/ministries" className="text-indigo-600 font-medium hover:underline">
+        <h1 className="text-3xl font-bold mb-4 text-brand-fg">Ministry not found</h1>
+        <Link to="/ministries" className="text-brand font-medium hover:underline">
           &larr; Back to Ministries
         </Link>
       </div>
@@ -29,31 +29,39 @@ export default function MinistryDetail() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-20">
-      <Link to="/ministries" className="text-indigo-600 font-medium hover:underline">
+      <Link to="/ministries" className="text-brand font-medium hover:underline">
         &larr; Back to Ministries
       </Link>
 
-      <h1 className="text-5xl font-bold mt-6 mb-4">{ministry.title}</h1>
+      <h1 className="text-5xl font-bold mt-6 mb-4 text-brand-fg">{ministry.title}</h1>
       {ministry.desc && (
-        <p className="text-xl text-slate-600 mb-10 max-w-3xl">{ministry.desc}</p>
+        <p className="text-xl text-brand-muted mb-10 max-w-3xl">{ministry.desc}</p>
       )}
 
       {ministry.image && (
-        <img
-          src={`${BACKEND_URL}${ministry.image}`}
-          alt={ministry.title}
-          className="w-full max-h-[420px] object-cover rounded-3xl mb-12"
-        />
+        <button
+          type="button"
+          onClick={() => {
+              window.location.href = `${BACKEND_URL}${ministry.image}`;
+            }}
+          className="block w-full mb-12 focus:outline-none group"
+        >
+          <img
+            src={`${BACKEND_URL}${ministry.image}`}
+            alt={ministry.title}
+            className="w-full max-h-[420px] object-cover rounded-3xl cursor-pointer transition group-hover:opacity-95"
+          />
+        </button>
       )}
 
-      <h2 className="text-2xl font-semibold mb-6">Photos &amp; Videos</h2>
+      <h2 className="text-2xl font-semibold mb-6 text-brand-fg">Photos &amp; Videos</h2>
 
       {gallery.length === 0 ? (
-        <p className="text-slate-500">No photos or videos have been added for this ministry yet.</p>
+        <p className="text-brand-muted">No photos or videos have been added for this ministry yet.</p>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {gallery.map((g, i) => (
-            <div key={i} className="rounded-2xl overflow-hidden border border-slate-200 bg-black/5">
+            <div key={i} className="rounded-2xl overflow-hidden border border-brand-border bg-black/5">
               {g.type === 'video' ? (
                 <video
                   src={`${BACKEND_URL}${g.url}`}
@@ -61,11 +69,17 @@ export default function MinistryDetail() {
                   className="w-full h-64 object-cover bg-black"
                 />
               ) : (
-                <img
-                  src={`${BACKEND_URL}${g.url}`}
-                  alt={ministry.title}
-                  className="w-full h-64 object-cover"
-                />
+                <button
+                  type="button"
+                  onClick={() => {window.location.href = `${BACKEND_URL}${g.url}`;}}
+                  className="block w-full focus:outline-none group"
+                >
+                  <img
+                    src={`${BACKEND_URL}${g.url}`}
+                    alt={ministry.title}
+                    className="w-full h-64 object-cover cursor-pointer transition group-hover:opacity-90"
+                  />
+                </button>
               )}
             </div>
           ))}

@@ -12,7 +12,7 @@ import AdminEventRegistrations from './AdminEventRegistrations';
 import fpfkLogo from '../../assets/fpfk-logo.png';
 import { buildLeadersField } from './LeadersManager';
 
-const BACKEND_URL = 'http://localhost:4000';
+const BACKEND_URL = '';
 
 // Builds the upload control (form) and the current-image preview (content)
 // for an image field, sharing ephemeral upload state lifted from the parent.
@@ -21,7 +21,7 @@ function buildImageField(field, value, onChange, ui, setUi, uploadImage) {
   const error = ui.error || '';
 
   const handleFile = async (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (!file) return;
     setUi({ uploading: true, error: '' });
     try {
@@ -35,29 +35,43 @@ function buildImageField(field, value, onChange, ui, setUi, uploadImage) {
 
   const form = (
     <div className="space-y-3">
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleFile}
-        disabled={uploading}
-        className="block w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-indigo-50 file:text-indigo-700"
-      />
-      {uploading && <p className="text-sm text-gray-500">Uploading...</p>}
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      <label className="flex flex-col items-center justify-center w-full min-h-[120px] border-2 border-dashed border-brand-border rounded-xl bg-brand-dark/40 hover:border-brand/50 hover:bg-brand/5 transition cursor-pointer px-4 py-6">
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFile}
+          disabled={uploading}
+          className="sr-only"
+        />
+        {uploading ? (
+          <span className="text-sm text-brand-muted">Uploading…</span>
+        ) : (
+          <>
+            <span className="text-2xl mb-2 opacity-70">📷</span>
+            <span className="text-sm font-medium text-brand-fg">Click to upload image</span>
+            <span className="text-xs text-brand-muted mt-1">PNG, JPG, WEBP · max recommended 2MB</span>
+          </>
+        )}
+      </label>
+      {error && (
+        <p className="text-sm text-red-400 bg-red-950/30 border border-red-900/40 rounded-lg px-3 py-2">{error}</p>
+      )}
     </div>
   );
 
   const content = value ? (
     <div className="space-y-3">
-      <img
-        src={`${BACKEND_URL}${value}`}
-        alt="Preview"
-        className="w-full max-w-full sm:max-w-sm h-40 sm:h-48 object-cover rounded-xl border border-gray-200"
-      />
+      <div className="relative inline-block">
+        <img
+          src={`${BACKEND_URL}${value}`}
+          alt="Preview"
+          className="w-full max-w-full sm:max-w-sm h-40 sm:h-48 object-cover rounded-xl border border-brand-border"
+        />
+      </div>
       <button
         type="button"
         onClick={() => onChange('')}
-        className="text-sm text-red-500 hover:underline"
+        className="text-sm text-red-400 hover:text-red-300 hover:underline"
       >
         Remove image
       </button>
@@ -102,26 +116,26 @@ function buildListField(field, items, onChange, ui, setUi) {
   };
 
   const form = (
-    <div className="border border-indigo-200 bg-indigo-50 rounded-xl p-3 sm:p-4 space-y-3">
-      <h4 className="text-sm font-semibold text-gray-700">
+    <div className="border border-brand-border bg-brand-dark/50 rounded-2xl p-5 sm:p-6 space-y-4">
+      <h4 className="text-base font-semibold text-brand-fg">
         {editingIndex !== null ? `Edit ${field.label.replace(/s$/, '')}` : `Add New ${field.label.replace(/s$/, '')}`}
       </h4>
       {field.itemFields.map((sf) => (
         <div key={sf.key}>
-          <label className="text-xs text-gray-500">{sf.label}</label>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-brand-muted mb-1.5">{sf.label}</label>
           <input
             value={draft[sf.key] || ''}
             onChange={(e) => updateDraft(sf.key, e.target.value)}
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"
+            className="w-full px-3.5 py-2.5 bg-brand-dark border border-brand-border rounded-xl text-sm text-brand-fg placeholder:text-brand-muted/70 focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition"
           />
         </div>
       ))}
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-400">{error}</p>}
       <div className="flex flex-col sm:flex-row gap-3">
         <button
           type="button"
           onClick={handleSubmit}
-          className="w-full sm:w-auto bg-indigo-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700"
+          className="bg-brand hover:bg-brand-deep text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition"
         >
           {editingIndex !== null ? 'Save Changes' : `+ Add ${field.label.replace(/s$/, '')}`}
         </button>
@@ -129,7 +143,7 @@ function buildListField(field, items, onChange, ui, setUi) {
           <button
             type="button"
             onClick={cancelEdit}
-            className="text-sm text-gray-500 hover:underline self-start sm:self-center"
+            className="text-sm text-brand-muted hover:underline self-start sm:self-center"
           >
             Cancel
           </button>
@@ -140,37 +154,38 @@ function buildListField(field, items, onChange, ui, setUi) {
 
   const content = items.length > 0 ? (
     <div className="space-y-2">
-      {items.map((item, i) => (
-        <div
-          key={i}
-          className="border border-gray-200 rounded-xl p-3 sm:p-4 bg-gray-50 flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4"
-        >
-          <div className="min-w-0 flex-1">
-            {field.itemFields.map((sf) => (
-              <div key={sf.key} className="text-sm">
-                <span className="text-gray-400">{sf.label}: </span>
-                <span className="text-gray-700 break-words">{item[sf.key] || '—'}</span>
-              </div>
+      <h3 className="text-xs font-semibold uppercase tracking-wider text-brand-muted">
+        {field.label} ({items.length})
+      </h3>
+      <div className="overflow-x-auto rounded-xl border border-brand-border bg-[#0f0f0f]">
+        <table className="w-full text-sm text-left min-w-[480px]">
+          <thead>
+            <tr className="bg-[#141414]">
+              {field.itemFields.map((sf) => (
+                <th key={sf.key} className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-brand-muted border-b border-brand-border">
+                  {sf.label}
+                </th>
+              ))}
+              <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-brand-muted border-b border-brand-border text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item, i) => (
+              <tr key={i} className="hover:bg-white/[0.02]">
+                {field.itemFields.map((sf) => (
+                  <td key={sf.key} className="px-4 py-3 border-b border-brand-border/70 text-brand-fg max-w-[200px] truncate">
+                    {item[sf.key] || '—'}
+                  </td>
+                ))}
+                <td className="px-4 py-3 border-b border-brand-border/70 text-right whitespace-nowrap">
+                  <button type="button" onClick={() => startEdit(i)} className="text-brand hover:text-brand-soft text-sm font-medium mr-3">Edit</button>
+                  <button type="button" onClick={() => handleDelete(i)} className="text-red-400 hover:text-red-300 text-sm font-medium">Delete</button>
+                </td>
+              </tr>
             ))}
-          </div>
-          <div className="flex gap-4 sm:gap-3 shrink-0">
-            <button
-              type="button"
-              onClick={() => startEdit(i)}
-              className="text-sm text-indigo-600 hover:underline"
-            >
-              Edit
-            </button>
-            <button
-              type="button"
-              onClick={() => handleDelete(i)}
-              className="text-sm text-red-600 hover:underline"
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   ) : null;
 
@@ -185,7 +200,7 @@ export default function AdminDashboard() {
   const [fieldUi, setFieldUi] = useState({});
   const navigate = useNavigate();
 
-  if (loading || !content) return <div className="p-10 text-center">Loading...</div>;
+  if (loading || !content) return <div className="p-10 text-center text-brand-fg min-h-screen bg-brand-dark">Loading...</div>;
 
   const currentDraft = draft ?? content[activePage];
   const schema = adminSchema[activePage];
@@ -224,8 +239,8 @@ export default function AdminDashboard() {
   const tabClass = (key) =>
     `whitespace-nowrap px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
       activePage === key
-        ? 'bg-white text-indigo-700 shadow-sm'
-        : 'text-indigo-200 hover:text-white hover:bg-white/10'
+        ? 'bg-brand/20 text-brand-light shadow-sm'
+        : 'text-brand-soft hover:text-white hover:bg-brand-border/10'
     }`;
 
   // Split every field into its editable "form" piece and its read-only
@@ -237,7 +252,7 @@ export default function AdminDashboard() {
     schema.fields.forEach((field) => {
       const key = field.key;
       const label = (
-        <label className="block text-sm font-medium text-gray-700 mb-1">{field.label}</label>
+        <label className="block text-xs font-semibold uppercase tracking-wider text-brand-muted mb-1.5">{field.label}</label>
       );
 
       if (field.type === 'text') {
@@ -247,7 +262,7 @@ export default function AdminDashboard() {
             <input
               value={currentDraft[key] || ''}
               onChange={(e) => updateField(key, e.target.value)}
-              className="w-full px-3 sm:px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 text-sm sm:text-base"
+              className="w-full px-3.5 py-2.5 bg-brand-dark border border-brand-border rounded-xl focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand text-sm text-brand-fg placeholder:text-brand-muted/70 transition"
             />
           </div>
         );
@@ -262,7 +277,7 @@ export default function AdminDashboard() {
               value={currentDraft[key] || ''}
               onChange={(e) => updateField(key, e.target.value)}
               rows={4}
-              className="w-full px-3 sm:px-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-400 text-sm sm:text-base"
+              className="w-full px-3.5 py-2.5 bg-brand-dark border border-brand-border rounded-xl focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand text-sm text-brand-fg placeholder:text-brand-muted/70 transition"
             />
           </div>
         );
@@ -287,7 +302,7 @@ export default function AdminDashboard() {
         if (content) {
           contentSections.push(
             <div key={`${key}-content`}>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-brand-muted mb-2">
                 Current {field.label}
               </label>
               {content}
@@ -314,7 +329,7 @@ export default function AdminDashboard() {
         if (content) {
           contentSections.push(
             <div key={`${key}-content`}>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-brand-muted mb-2">
                 Current {field.label}
               </label>
               {content}
@@ -340,7 +355,7 @@ export default function AdminDashboard() {
   if (fieldContent) {
     contentSections.push(
       <div key={`${key}-content`}>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-xs font-semibold uppercase tracking-wider text-brand-muted mb-2">
           Current {field.label}
         </label>
         {fieldContent}
@@ -367,7 +382,7 @@ export default function AdminDashboard() {
         if (content) {
           contentSections.push(
             <div key={`${key}-content`}>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-brand-muted mb-2">
                 Current {field.label}
               </label>
               {content}
@@ -394,7 +409,7 @@ export default function AdminDashboard() {
         if (content) {
           contentSections.push(
             <div key={`${key}-content`}>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-brand-muted mb-2">
                 Current {field.label}
               </label>
               {content}
@@ -420,7 +435,7 @@ export default function AdminDashboard() {
         if (fieldContent) {
           contentSections.push(
             <div key={`${key}-content`}>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-brand-muted mb-2">
                 Current {field.label}
               </label>
               {fieldContent}
@@ -447,7 +462,7 @@ export default function AdminDashboard() {
         if (content) {
           contentSections.push(
             <div key={`${key}-content`}>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-brand-muted mb-2">
                 Current {field.label}
               </label>
               {content}
@@ -459,9 +474,9 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-brand-dark">
       {/* Top bar */}
-      <div className="bg-indigo-950 sticky top-0 z-40 shadow-md">
+      <div className="bg-brand-dark sticky top-0 z-40 shadow-md">
         <div className="max-w-6xl mx-auto px-3 sm:px-6">
           <div className="flex items-center justify-between h-14 sm:h-16">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -474,7 +489,7 @@ export default function AdminDashboard() {
             </div>
             <button
               onClick={logout}
-              className="text-xs sm:text-sm text-indigo-200 hover:text-white shrink-0 ml-2"
+              className="text-xs sm:text-sm text-brand-soft hover:text-white shrink-0 ml-2"
             >
               Log Out
             </button>
@@ -485,20 +500,20 @@ export default function AdminDashboard() {
             <select
               value={activePage}
               onChange={(e) => selectPage(e.target.value)}
-              className="w-full bg-white/10 text-white border border-white/20 rounded-lg px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-400/50"
+              className="w-full bg-brand-border/10 text-white border border-white/20 rounded-lg px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-soft/50"
             >
               {Object.entries(adminSchema).map(([key, s]) => (
-                <option key={key} value={key} className="text-gray-900">
+                <option key={key} value={key} className="text-brand-fg">
                   {s.label}
                 </option>
               ))}
-              <option value="messages" className="text-gray-900">
+              <option value="messages" className="text-brand-fg">
                 Messages
               </option>
-              <option value="giving" className="text-gray-900">
+              <option value="giving" className="text-brand-fg">
                 Giving Records
               </option>
-              <option value="registrations" className="text-gray-900">
+              <option value="registrations" className="text-brand-fg">
                 Event Registrations
               </option>
             </select>
@@ -511,7 +526,7 @@ export default function AdminDashboard() {
                 {s.label}
               </button>
             ))}
-            <span className="w-px h-5 bg-white/20 mx-1 shrink-0" />
+            <span className="w-px h-5 bg-brand-border/20 mx-1 shrink-0" />
             <button onClick={() => selectPage('messages')} className={tabClass('messages')}>
               Messages
             </button>
@@ -534,23 +549,23 @@ export default function AdminDashboard() {
         ) : activePage === 'registrations' ? (
           <AdminEventRegistrations />
         ) : (
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 sm:p-8 space-y-6">
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Update {schema.label} Content</h1>
+          <div className="rounded-xl border border-brand-border bg-[#0f0f0f] shadow-sm p-5 sm:p-8 space-y-6">
+            <h1 className="text-lg sm:text-xl font-semibold text-brand-fg tracking-tight">Update {schema.label} Content</h1>
 
             {formSections}
 
             <div className="space-y-2">
               <button
                 onClick={handleSave}
-                className="w-full sm:w-auto bg-indigo-600 text-white px-6 sm:px-8 py-3 rounded-xl font-semibold hover:bg-indigo-700"
+                className="w-full sm:w-auto inline-flex items-center justify-center bg-brand hover:bg-brand-deep text-white px-6 sm:px-8 py-3 rounded-xl font-semibold transition shadow-sm shadow-brand/20"
               >
                 Save Changes
               </button>
-              {status && <p className="text-sm text-gray-600">{status}</p>}
+              {status && <p className="text-sm text-brand-muted">{status}</p>}
             </div>
 
             {contentSections.length > 0 && (
-              <div className="pt-4 border-t border-gray-100 space-y-6">
+              <div className="pt-4 border-t border-brand-border space-y-6">
                 {contentSections}
               </div>
             )}

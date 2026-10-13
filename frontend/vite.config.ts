@@ -11,5 +11,15 @@ export default defineConfig({
       '.ngrok-free.dev', // allow any future ngrok-free.dev tunnel too
       '.ngrok-free.app',
     ],
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+      },
+      '/uploads': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+      },
+    },
   },
 })

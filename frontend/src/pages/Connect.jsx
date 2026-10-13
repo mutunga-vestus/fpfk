@@ -3,7 +3,7 @@ import { User, Mail, Phone, Globe2, MessageSquare, CheckCircle2, Loader2 } from 
 import { useContent } from '../context/ContentContext';
 import { COUNTRIES } from '../data/countries';
 
-const API_URL = 'http://localhost:4000/api';
+const API_URL = '/api';
 
 const BLANK_FORM = {
   firstName: '',
@@ -86,36 +86,36 @@ export default function Connect() {
   };
 
   const inputBase =
-    'block w-full pl-11 pr-4 py-2.5 bg-slate-50 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm text-slate-900 outline-none transition-all';
-  const borderFor = (key) => (fieldErrors[key] ? 'border-red-400' : 'border-slate-200');
+    'block w-full pl-11 pr-4 py-2.5 bg-gray-900 border rounded-xl focus:ring-2 focus:ring-brand focus:border-brand text-sm text-brand-fg outline-none transition-all';
+  const borderFor = (key) => (fieldErrors[key] ? 'border-red-400' : 'border-gray-700');
 
   return (
-    <div className="min-h-screen bg-slate-50 py-16 px-4">
+    <div className="min-h-screen bg-gray-900 py-16 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-slate-900 mb-3">{title}</h1>
-          <p className="text-lg text-slate-500">{subtitle}</p>
+          <h1 className="text-4xl font-bold text-brand-fg mb-3">{title}</h1>
+          <p className="text-lg text-gray-400">{subtitle}</p>
         </div>
 
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="bg-gray-900 rounded-2xl border border-gray-700 shadow-sm overflow-hidden">
           {/* Card Header */}
-          <div className="bg-gradient-to-r from-indigo-600 to-violet-600 px-8 py-5">
+          <div className="bg-gradient-to-r from-brand to-brand-red px-8 py-5">
             <h2 className="text-white font-bold text-lg tracking-tight">Get In Touch</h2>
-            <p className="text-indigo-200 text-xs mt-1">Fill in your details and we'll get back to you.</p>
+            <p className="text-brand-soft text-xs mt-1">Fill in your details and we'll get back to you.</p>
           </div>
 
           <div className="p-6 md:p-8">
             {status === 'success' ? (
               <div className="text-center py-8">
                 <CheckCircle2 className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
-                <p className="text-2xl font-bold text-slate-800 mb-2">Message sent!</p>
-                <p className="text-slate-500 mb-8">
+                <p className="text-2xl font-bold text-gray-100 mb-2">Message sent!</p>
+                <p className="text-gray-400 mb-8">
                   Thank you for reaching out — we'll be in touch soon.
                 </p>
                 <button
                   type="button"
                   onClick={() => setStatus('idle')}
-                  className="text-indigo-600 font-bold text-sm hover:underline"
+                  className="text-brand font-bold text-sm hover:underline"
                 >
                   Send another message
                 </button>
@@ -125,7 +125,7 @@ export default function Connect() {
                 {/* Name */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">First Name</label>
+                    <label className="block text-xs font-bold text-gray-200 uppercase tracking-wider">First Name</label>
                     <div className="relative">
                       <User className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
                       <input
@@ -138,7 +138,7 @@ export default function Connect() {
                     <FieldError>{fieldErrors.firstName}</FieldError>
                   </div>
                   <div className="space-y-2">
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Last Name</label>
+                    <label className="block text-xs font-bold text-gray-200 uppercase tracking-wider">Last Name</label>
                     <div className="relative">
                       <User className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
                       <input
@@ -154,7 +154,7 @@ export default function Connect() {
                 {/* Email + Phone */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Email Address</label>
+                    <label className="block text-xs font-bold text-gray-200 uppercase tracking-wider">Email Address</label>
                     <div className="relative">
                       <Mail className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
                       <input
@@ -167,7 +167,7 @@ export default function Connect() {
                     <FieldError>{fieldErrors.email}</FieldError>
                   </div>
                   <div className="space-y-2">
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Phone Number</label>
+                    <label className="block text-xs font-bold text-gray-200 uppercase tracking-wider">Phone Number</label>
                     <div className="relative">
                       <Phone className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
                       <input
@@ -184,7 +184,7 @@ export default function Connect() {
                 {/* Nationality + Reason */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Nationality</label>
+                    <label className="block text-xs font-bold text-gray-200 uppercase tracking-wider">Nationality</label>
                     <div className="relative">
                       <Globe2 className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
                       <input
@@ -203,7 +203,7 @@ export default function Connect() {
                     <FieldError>{fieldErrors.nationality}</FieldError>
                   </div>
                   <div className="space-y-2">
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Reason</label>
+                    <label className="block text-xs font-bold text-gray-200 uppercase tracking-wider">Reason</label>
                     <div className="relative">
                       <MessageSquare className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
                       <select
@@ -223,13 +223,13 @@ export default function Connect() {
 
                 {/* Message */}
                 <div className="space-y-2">
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">How Can We Pray For You?</label>
+                  <label className="block text-xs font-bold text-gray-200 uppercase tracking-wider">How Can We Pray For You?</label>
                   <textarea
                     rows={5}
                     maxLength={MESSAGE_MAX}
                     value={form.message}
                     onChange={(e) => updateField('message', e.target.value)}
-                    className={`block w-full px-4 py-2.5 bg-slate-50 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm text-slate-900 outline-none transition-all resize-none ${borderFor(
+                    className={`block w-full px-4 py-2.5 bg-gray-900 border rounded-xl focus:ring-2 focus:ring-brand focus:border-brand text-sm text-brand-fg outline-none transition-all resize-none ${borderFor(
                       'message'
                     )}`}
                   ></textarea>
@@ -248,11 +248,11 @@ export default function Connect() {
                 )}
 
                 {/* Actions */}
-                <div className="pt-4 flex items-center justify-end border-t border-slate-100">
+                <div className="pt-4 flex items-center justify-end border-t border-gray-800">
                   <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="flex items-center justify-center gap-2 px-8 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-200 transition-all hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:hover:translate-y-0"
+                    className="flex items-center justify-center gap-2 px-8 py-2.5 bg-gradient-to-r from-brand to-brand-red hover:from-brand-deep hover:to-brand-red-dark text-white text-xs font-bold rounded-xl shadow-md shadow-brand/20 transition-all hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:hover:translate-y-0"
                   >
                     {status === 'sending' && <Loader2 className="w-4 h-4 animate-spin" />}
                     {status === 'sending' ? 'Sending...' : 'Send Message'}

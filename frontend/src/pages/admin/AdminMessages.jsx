@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 
-const API_URL = 'http://localhost:4000/api';
+const API_URL = '/api';
 
 export default function AdminMessages() {
   const [messages, setMessages] = useState(null);
   const [error, setError] = useState('');
+  const [expanded, setExpanded] = useState(null);
 
   const loadMessages = async () => {
     const token = localStorage.getItem('admin_token');
@@ -50,63 +51,88 @@ export default function AdminMessages() {
     }
   };
 
-  if (error) return <p className="text-red-600">{error}</p>;
-  if (!messages) return <div className="text-gray-500">Loading messages...</div>;
+  if (error) return <p className="text-red-400">{error}</p>;
+  if (!messages) return <div className="text-brand-muted">Loading messages…</div>;
 
   const unreadCount = messages.filter((m) => !m.is_read).length;
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">
-        Messages ({messages.length}){unreadCount > 0 && (
-          <span className="ml-2 text-base font-medium text-blue-600">{unreadCount} new</span>
+      <div className="flex items-baseline gap-3">
+        <h1 className="text-lg font-semibold text-brand-fg tracking-tight">Messages</h1>
+        <span className="text-sm text-brand-muted">{messages.length} total</span>
+        {unreadCount > 0 && (
+          <span className="text-xs font-semibold bg-brand/20 text-brand px-2 py-0.5 rounded-full">{unreadCount} new</span>
         )}
-      </h1>
+      </div>
 
-      {messages.length === 0 && (
-        <p className="text-gray-500">No messages yet — submissions from the Connect page will show up here.</p>
-      )}
-
-      {messages.map((m) => (
-        <div
-          key={m.id}
-          className={`border rounded-xl p-5 ${
-            m.is_read ? 'border-gray-200 bg-white' : 'border-blue-300 bg-blue-50'
-          }`}
-        >
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <div className="font-semibold">
-                {m.first_name || m.last_name ? `${m.first_name} ${m.last_name}`.trim() : 'Anonymous'}
-                {!m.is_read && (
-                  <span className="ml-2 text-xs text-blue-600 font-medium align-middle">NEW</span>
-                )}
-              </div>
-              <div className="text-sm text-gray-500">{m.email}</div>
-              <div className="text-xs text-gray-400 mt-1">
-                {new Date(m.created_at).toLocaleString()}
-              </div>
-            </div>
-            <div className="flex gap-3 shrink-0">
-              {!m.is_read && (
-                <button
-                  onClick={() => markAsRead(m.id)}
-                  className="text-sm text-blue-600 hover:underline"
-                >
-                  Mark read
-                </button>
-              )}
-              <button
-                onClick={() => deleteMessage(m.id)}
-                className="text-sm text-red-600 hover:underline"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-          <p className="mt-3 text-gray-700 whitespace-pre-wrap">{m.message}</p>
+      {messages.length === 0 ? (
+        <p className="text-brand-muted text-sm">No messages yet — Connect page submissions appear here.</p>
+      ) : (
+        <div className="overflow-x-auto rounded-xl border border-brand-border bg-[#0f0f0f]">
+          <table className="w-full text-sm text-left min-w-[640px]">
+            <thead>
+              <tr className="bg-[#141414]">
+                <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-brand-muted border-b border-brand-border">Status</th>
+                <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-brand-muted border-b border-brand-border">From</th>
+                <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-brand-muted border-b border-brand-border">Email</th>
+                <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-brand-muted border-b border-brand-border">Preview</th>
+                <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-brand-muted border-b border-brand-border">Date</th>
+                <th className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-brand-muted border-b border-brand-border text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {messages.map((m) => {
+                const name =
+                  m.first_name || m.last_name
+                    ? `${m.first_name || ''} ${m.last_name || ''}`.trim()
+                    : 'Anonymous';
+                const isOpen = expanded === m.id;
+                return (
+                  <Fragment key={m.id}>
+                    <tr className={`hover:bg-white/[0.02] ${!m.is_read ? 'bg-brand/5' : ''}`}>
+                      <td className="px-4 py-3 border-b border-brand-border/70">
+                        {!m.is_read ? (
+                          <span className="text-[10px] font-bold uppercase tracking-wide text-brand bg-brand/15 px-1.5 py-0.5 rounded">New</span>
+                        ) : (
+                          <span className="text-[10px] text-brand-muted">Read</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 border-b border-brand-border/70 text-brand-fg font-medium whitespace-nowrap">{name}</td>
+                      <td className="px-4 py-3 border-b border-brand-border/70 text-brand-muted">{m.email || '—'}</td>
+                      <td className="px-4 py-3 border-b border-brand-border/70 text-brand-muted max-w-[220px] truncate">
+                        <button type="button" onClick={() => setExpanded(isOpen ? null : m.id)} className="hover:text-brand-fg text-left truncate max-w-full">
+                          {m.message || '—'}
+                        </button>
+                      </td>
+                      <td className="px-4 py-3 border-b border-brand-border/70 text-brand-muted whitespace-nowrap text-xs">
+                        {new Date(m.created_at).toLocaleDateString()}
+                      </td>
+                      <td className="px-4 py-3 border-b border-brand-border/70 text-right whitespace-nowrap">
+                        {!m.is_read && (
+                          <button type="button" onClick={() => markAsRead(m.id)} className="text-brand hover:text-brand-soft text-sm font-medium mr-3">
+                            Mark read
+                          </button>
+                        )}
+                        <button type="button" onClick={() => deleteMessage(m.id)} className="text-red-400 hover:text-red-300 text-sm font-medium">
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                    {isOpen && (
+                      <tr>
+                        <td colSpan={6} className="px-4 py-4 border-b border-brand-border bg-[#121212] text-brand-fg whitespace-pre-wrap text-sm">
+                          {m.message}
+                        </td>
+                      </tr>
+                    )}
+                  </Fragment>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
-      ))}
+      )}
     </div>
   );
 }

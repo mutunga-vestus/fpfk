@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { X, CheckCircle2 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
-const BACKEND_URL = 'http://localhost:4000';
-const API_URL = 'http://localhost:4000/api';
+const BACKEND_URL = '';
+const API_URL = '/api';
 
 const BLANK_FORM = { fullName: '', nationality: '', phone: '' };
 
@@ -44,7 +44,7 @@ function RegisterModal({ event, onClose }) {
   };
 
   const inputBase =
-    'block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm text-slate-900 outline-none transition-all';
+    'block w-full px-4 py-2.5 bg-brand-dark border border-brand-border rounded-xl focus:ring-2 focus:ring-brand focus:border-brand text-sm text-brand-fg outline-none transition-all placeholder:text-brand-muted';
 
   return (
     <div
@@ -52,31 +52,31 @@ function RegisterModal({ event, onClose }) {
       onClick={onClose}
     >
       <div
-        className="relative bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden w-full max-w-md"
+        className="relative bg-brand-border rounded-2xl border border-brand-border shadow-sm overflow-hidden w-full max-w-md"
         onClick={(e) => e.stopPropagation()}
       >
         {status === 'success' ? (
           <div className="p-8 text-center py-10">
             <CheckCircle2 className="w-14 h-14 text-emerald-500 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-slate-800 mb-2">You're registered!</h3>
-            <p className="text-slate-500 text-sm">We look forward to seeing you at {event.title}.</p>
+            <h3 className="text-xl font-bold text-brand-fg mb-2">You're registered!</h3>
+            <p className="text-brand-muted text-sm">We look forward to seeing you at {event.title}.</p>
             <button
               onClick={onClose}
-              className="mt-6 px-8 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-200 transition-all hover:-translate-y-0.5 active:scale-95"
+              className="mt-6 px-8 py-2.5 bg-gradient-to-r from-brand to-brand-red hover:from-brand-deep hover:to-brand-red-dark text-white text-xs font-bold rounded-xl shadow-md shadow-brand/20 transition-all hover:-translate-y-0.5 active:scale-95"
             >
               Done
             </button>
           </div>
         ) : (
           <>
-            <div className="bg-gradient-to-r from-indigo-600 to-violet-600 px-8 py-5 flex items-center justify-between">
+            <div className="bg-gradient-to-r from-brand to-brand-red px-8 py-5 flex items-center justify-between">
               <div>
                 <h2 className="text-white font-bold text-lg tracking-tight">Register</h2>
-                <p className="text-indigo-200 text-xs mt-1">{event.title}</p>
+                <p className="text-brand-soft text-xs mt-1">{event.title}</p>
               </div>
               <button
                 onClick={onClose}
-                className="text-indigo-200 hover:text-white transition-colors"
+                className="text-brand-soft hover:text-white transition-colors"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />
@@ -86,7 +86,7 @@ function RegisterModal({ event, onClose }) {
             <div className="p-6 md:p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Full Name</label>
+                  <label className="block text-xs font-bold text-brand-fg uppercase tracking-wider">Full Name</label>
                   <input
                     type="text"
                     value={form.fullName}
@@ -96,7 +96,7 @@ function RegisterModal({ event, onClose }) {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Nationality</label>
+                  <label className="block text-xs font-bold text-brand-fg uppercase tracking-wider">Nationality</label>
                   <input
                     type="text"
                     value={form.nationality}
@@ -106,7 +106,7 @@ function RegisterModal({ event, onClose }) {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">Phone Number</label>
+                  <label className="block text-xs font-bold text-brand-fg uppercase tracking-wider">Phone Number</label>
                   <input
                     type="tel"
                     value={form.phone}
@@ -118,23 +118,23 @@ function RegisterModal({ event, onClose }) {
                 </div>
 
                 {error && (
-                  <p className="text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2.5 text-sm">
+                  <p className="text-red-400 bg-red-950/40 border border-red-900/50 rounded-xl px-4 py-2.5 text-sm">
                     {error}
                   </p>
                 )}
 
-                <div className="pt-4 flex items-center justify-end gap-3 border-t border-slate-100">
+                <div className="pt-4 flex items-center justify-end gap-3 border-t border-brand-border">
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-5 py-2 text-xs font-bold text-slate-500 hover:text-slate-700 border border-slate-200 rounded-xl hover:bg-slate-50 transition-all"
+                    className="px-5 py-2 text-xs font-bold text-brand-muted hover:text-brand-fg border border-brand-border rounded-xl hover:bg-brand-dark transition-all"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="px-8 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-200 transition-all hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:hover:translate-y-0"
+                    className="px-8 py-2.5 bg-gradient-to-r from-brand to-brand-red hover:from-brand-deep hover:to-brand-red-dark text-white text-xs font-bold rounded-xl shadow-md shadow-brand/20 transition-all hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:hover:translate-y-0"
                   >
                     {status === 'sending' ? 'Registering...' : 'Confirm Registration'}
                   </button>
@@ -157,29 +157,37 @@ export default function Events() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-20">
-      <h1 className="text-5xl font-bold text-center mb-6">{title}</h1>
-      <p className="text-center text-slate-600 mb-12">{subtitle}</p>
+      <h1 className="text-5xl font-bold text-center mb-6 text-brand-fg">{title}</h1>
+      <p className="text-center text-brand-muted mb-12">{subtitle}</p>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {items.map((event, i) => (
           <div
             key={event.id || i}
-            className="border border-slate-200 rounded-3xl overflow-hidden hover:border-indigo-200 transition-all hover:shadow-xl flex flex-col"
+            className="border border-brand-border rounded-3xl overflow-hidden hover:border-brand/30 transition-all hover:shadow-xl flex flex-col"
           >
             {event.image && (
-              <img
-                src={`${BACKEND_URL}${event.image}`}
-                alt={event.title}
-                className="w-full h-48 object-cover"
-              />
+              <button
+                type="button"
+                onClick={() => {
+              window.location.href = `${BACKEND_URL}${event.image}`;
+              }}
+                className="block w-full focus:outline-none group"
+              >
+                <img
+                  src={`${BACKEND_URL}${event.image}`}
+                  alt={event.title}
+                  className="w-full h-48 object-cover cursor-pointer transition group-hover:opacity-90"
+                />
+              </button>
             )}
             <div className="p-8 flex flex-col flex-1">
-              <div className="text-indigo-600 font-medium">{event.date}</div>
-              <h3 className="text-2l font-semibold mt-2 mb-3">{event.title}</h3>
-              <p className="text-slate-600 mb-6">{event.desc}</p>
+              <div className="text-brand font-medium">{event.date}</div>
+              <h3 className="text-2xl font-semibold mt-2 mb-3 text-brand-fg">{event.title}</h3>
+              <p className="text-brand-muted mb-6">{event.desc}</p>
               <button
                 onClick={() => setRegisteringEvent(event)}
-                className="mt-auto bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white px-8 py-3.5 rounded-full self-start shadow-md shadow-indigo-200 transition-all hover:-translate-y-0.5"
+                className="mt-auto bg-gradient-to-r from-brand to-brand-red hover:from-brand-deep hover:to-brand-red-dark text-white px-8 py-3.5 rounded-full self-start shadow-md shadow-brand/20 transition-all hover:-translate-y-0.5"
               >
                 {event.buttonLabel}
               </button>

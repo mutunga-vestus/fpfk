@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const API_URL = 'http://localhost:4000/api';
+const API_URL = '/api';
 
 function formatAmount(amount) {
   if (amount === null || amount === undefined || amount === '') return '—';
@@ -74,34 +74,34 @@ function GivingSettingsPanel() {
   };
 
   const inputBase =
-    'block w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none';
-  const labelBase = 'block text-xs font-bold text-gray-600 uppercase tracking-wide mb-1';
+    'block w-full px-3 py-2 bg-brand-border border border-brand-border rounded-lg text-sm text-brand-fg focus:ring-2 focus:ring-brand focus:border-brand outline-none';
+  const labelBase = 'block text-xs font-bold text-brand-muted uppercase tracking-wide mb-1';
 
   if (error && !settings) {
-    return <p className="text-red-600">{error}</p>;
+    return <p className="text-red-400">{error}</p>;
   }
   if (!settings) {
-    return <div className="text-gray-500">Loading giving page settings...</div>;
+    return <div className="text-brand-muted">Loading giving page settings...</div>;
   }
 
   return (
     <form
       onSubmit={handleSave}
-      className="border border-gray-200 rounded-xl p-6 bg-gray-50 space-y-6"
+      className="border border-brand-border rounded-xl p-6 bg-brand-dark space-y-6"
     >
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <h2 className="text-lg font-bold text-gray-900">Giving Page Settings</h2>
+        <h2 className="text-lg font-bold text-brand-fg">Giving Page Settings</h2>
         <div className="flex items-center gap-3">
           {saveState === 'saved' && (
             <span className="text-sm text-emerald-600 font-medium">Saved ✓</span>
           )}
           {saveState === 'error' && (
-            <span className="text-sm text-red-600 font-medium">{error}</span>
+            <span className="text-sm text-red-400 font-medium">{error}</span>
           )}
           <button
             type="submit"
             disabled={saveState === 'saving'}
-            className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-lg disabled:opacity-50"
+            className="px-5 py-2 bg-brand hover:bg-brand-deep text-white text-sm font-bold rounded-lg disabled:opacity-50"
           >
             {saveState === 'saving' ? 'Saving...' : 'Save Changes'}
           </button>
@@ -109,7 +109,7 @@ function GivingSettingsPanel() {
       </div>
 
       <div>
-        <h3 className="text-sm font-bold text-gray-700 mb-3">Page Text</h3>
+        <h3 className="text-sm font-bold text-brand-fg mb-3">Page Text</h3>
         <div className="grid md:grid-cols-2 gap-4">
           <div>
             <label className={labelBase}>Title</label>
@@ -141,8 +141,8 @@ function GivingSettingsPanel() {
         </div>
       </div>
 
-      <div className="pt-4 border-t border-gray-200">
-        <h3 className="text-sm font-bold text-gray-700 mb-3">M-Pesa Paybill (manual)</h3>
+      <div className="pt-4 border-t border-brand-border">
+        <h3 className="text-sm font-bold text-brand-fg mb-3">M-Pesa Paybill (manual)</h3>
         <div className="grid md:grid-cols-2 gap-4">
           <div>
             <label className={labelBase}>Paybill Number</label>
@@ -167,8 +167,8 @@ function GivingSettingsPanel() {
         </div>
       </div>
 
-      <div className="pt-4 border-t border-gray-200">
-        <h3 className="text-sm font-bold text-gray-700 mb-3">Bank Transfer</h3>
+      <div className="pt-4 border-t border-brand-border">
+        <h3 className="text-sm font-bold text-brand-fg mb-3">Bank Transfer</h3>
         <div className="grid md:grid-cols-2 gap-4">
           <div>
             <label className={labelBase}>Bank Name</label>
@@ -274,22 +274,22 @@ export default function AdminGiving() {
       <GivingSettingsPanel />
 
       <div className="space-y-4">
-        {error && <p className="text-red-600">{error}</p>}
+        {error && <p className="text-red-400">{error}</p>}
         {!records ? (
-          <div className="text-gray-500">Loading giving records...</div>
+          <div className="text-brand-muted">Loading giving records...</div>
         ) : (
           <>
             <h1 className="text-2xl font-bold">
               Giving Records ({records.length})
               {records.filter((r) => !r.is_confirmed).length > 0 && (
-                <span className="ml-2 text-base font-medium text-blue-600">
+                <span className="ml-2 text-base font-medium text-brand">
                   {records.filter((r) => !r.is_confirmed).length} to confirm
                 </span>
               )}
             </h1>
 
             {records.length === 0 && (
-              <p className="text-gray-500">
+              <p className="text-brand-muted">
                 No giving notifications yet — submissions from the Give page will show up here.
               </p>
             )}
@@ -298,7 +298,7 @@ export default function AdminGiving() {
               <div
                 key={r.id}
                 className={`border rounded-xl p-5 ${
-                  r.is_confirmed ? 'border-gray-200 bg-white' : 'border-blue-300 bg-blue-50'
+                  r.is_confirmed ? 'border-brand-border bg-brand-border' : 'border-brand-soft bg-brand/10'
                 }`}
               >
                 <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -306,13 +306,13 @@ export default function AdminGiving() {
                     <div className="font-semibold">
                       {r.full_name || 'Anonymous'}
                       {!r.is_confirmed && (
-                        <span className="ml-2 text-xs text-blue-600 font-medium align-middle">NEW</span>
+                        <span className="ml-2 text-xs text-brand font-medium align-middle">NEW</span>
                       )}
                     </div>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-brand-muted">
                       {[r.email, r.phone].filter(Boolean).join(' • ') || 'No contact provided'}
                     </div>
-                    <div className="text-xs text-gray-400 mt-1">
+                    <div className="text-xs text-brand-muted mt-1">
                       {new Date(r.created_at).toLocaleString()}
                     </div>
                   </div>
@@ -320,14 +320,14 @@ export default function AdminGiving() {
                     {!r.is_confirmed && (
                       <button
                         onClick={() => markConfirmed(r.id)}
-                        className="text-sm text-blue-600 hover:underline"
+                        className="text-sm text-brand hover:underline"
                       >
                         Mark confirmed
                       </button>
                     )}
                     <button
                       onClick={() => deleteRecord(r.id)}
-                      className="text-sm text-red-600 hover:underline"
+                      className="text-sm text-red-400 hover:underline"
                     >
                       Delete
                     </button>
@@ -335,20 +335,20 @@ export default function AdminGiving() {
                 </div>
                 <div className="mt-3 grid sm:grid-cols-4 gap-3 text-sm">
                   <div>
-                    <span className="text-gray-400">Type: </span>
-                    <span className="text-gray-700 font-medium">{r.giving_type}</span>
+                    <span className="text-brand-muted">Type: </span>
+                    <span className="text-brand-fg font-medium">{r.giving_type}</span>
                   </div>
                   <div>
-                    <span className="text-gray-400">Method: </span>
-                    <span className="text-gray-700 font-medium">{r.payment_method}</span>
+                    <span className="text-brand-muted">Method: </span>
+                    <span className="text-brand-fg font-medium">{r.payment_method}</span>
                   </div>
                   <div>
-                    <span className="text-gray-400">Amount: </span>
-                    <span className="text-gray-700 font-medium">{formatAmount(r.amount)}</span>
+                    <span className="text-brand-muted">Amount: </span>
+                    <span className="text-brand-fg font-medium">{formatAmount(r.amount)}</span>
                   </div>
                   <div>
-                    <span className="text-gray-400">Reference: </span>
-                    <span className="text-gray-700 font-medium">{r.reference || '—'}</span>
+                    <span className="text-brand-muted">Reference: </span>
+                    <span className="text-brand-fg font-medium">{r.reference || '—'}</span>
                   </div>
                 </div>
               </div>

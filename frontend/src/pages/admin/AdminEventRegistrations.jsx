@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
-const API_URL = 'http://localhost:4000/api';
+const API_URL = '/api';
 
 export default function AdminEventRegistrations() {
   const [registrations, setRegistrations] = useState(null);
@@ -50,15 +50,17 @@ export default function AdminEventRegistrations() {
     return Array.from(map.values()).sort((a, b) => b.registrations.length - a.registrations.length);
   }, [registrations]);
 
-  if (error) return <p className="text-red-600">{error}</p>;
-  if (!registrations) return <div className="text-gray-500">Loading registrations...</div>;
+  if (error) return <p className="text-red-400">{error}</p>;
+  if (!registrations) return <div className="text-brand-muted">Loading registrations...</div>;
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold">Event Registrations ({registrations.length})</h1>
+      <h1 className="text-2xl font-bold text-brand-fg">
+        Event Registrations ({groups.length} event{groups.length !== 1 ? 's' : ''})
+      </h1>
 
       {groups.length === 0 && (
-        <p className="text-gray-500">
+        <p className="text-brand-muted">
           No one has registered for an event yet — signups will show up here, grouped by event.
         </p>
       )}
@@ -67,33 +69,35 @@ export default function AdminEventRegistrations() {
         const key = group.registrations[0]?.event_id || group.eventTitle;
         const isOpen = expandedEvent === key;
         return (
-          <div key={key} className="border border-gray-200 rounded-xl overflow-hidden">
+          <div key={key} className="border border-brand-border rounded-xl overflow-hidden">
             <button
               type="button"
               onClick={() => setExpandedEvent(isOpen ? null : key)}
-              className="w-full flex items-center justify-between px-5 py-4 bg-gray-50 hover:bg-gray-100 transition"
+              className="w-full flex items-center justify-between px-5 py-4 bg-brand-dark hover:bg-brand-border/50 transition"
             >
-              <span className="font-semibold">{group.eventTitle}</span>
-              <span className="text-sm text-gray-500">{group.registrations.length} registered</span>
+              <span className="font-semibold text-brand-fg">{group.eventTitle}</span>
+              <span className="text-sm text-brand-muted">
+                {group.registrations.length} member{group.registrations.length !== 1 ? 's' : ''} registered
+              </span>
             </button>
 
             {isOpen && (
-              <div className="divide-y divide-gray-100">
+              <div className="divide-y divide-brand-border">
                 {group.registrations.map((r) => (
                   <div key={r.id} className="flex items-center justify-between gap-4 px-5 py-3 flex-wrap">
                     <div>
-                      <div className="font-medium">{r.full_name}</div>
-                      <div className="text-sm text-gray-500">
+                      <div className="font-medium text-brand-fg">{r.full_name}</div>
+                      <div className="text-sm text-brand-muted">
                         {[r.nationality, r.phone].filter(Boolean).join(' • ') || 'No further details'}
                       </div>
                     </div>
                     <div className="flex items-center gap-4 shrink-0">
-                      <span className="text-xs text-gray-400">
+                      <span className="text-xs text-brand-muted">
                         {new Date(r.created_at).toLocaleDateString()}
                       </span>
                       <button
                         onClick={() => deleteRegistration(r.id)}
-                        className="text-sm text-red-600 hover:underline"
+                        className="text-sm text-red-400 hover:underline"
                       >
                         Remove
                       </button>

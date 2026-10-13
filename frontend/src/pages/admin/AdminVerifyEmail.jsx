@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const API_URL = 'http://localhost:4000/api';
+const API_URL = '/api';
 
 export default function AdminVerifyEmail() {
   const [status, setStatus] = useState('verifying');
@@ -34,10 +34,10 @@ export default function AdminVerifyEmail() {
 
   return (
     <div className="max-w-sm mx-auto px-6 py-24 text-center">
-      <h1 className="text-3xl font-bold mb-6">Email Verification</h1>
-      <p className={status === 'error' ? 'text-red-600' : 'text-gray-700'}>{message}</p>
+      <h1 className="text-3xl font-bold mb-6 text-brand-fg">Email Verification</h1>
+      <p className={status === 'error' ? 'text-red-400' : 'text-brand-fg'}>{message}</p>
       {status === 'success' && (
-        <Link to="/admin/login" className="inline-block mt-6 text-blue-600 hover:underline">
+        <Link to="/admin/login" className="inline-block mt-6 text-brand hover:underline">
           Go to login
         </Link>
       )}

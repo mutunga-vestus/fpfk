@@ -94,13 +94,13 @@ export default function Sermons() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by title or speaker..."
-            className="w-full pl-12 pr-6 py-3.5 border border-slate-200 rounded-full focus:outline-none focus:border-indigo-500"
+            className="w-full pl-12 pr-6 py-3.5 border border-gray-700 rounded-full focus:outline-none focus:border-brand"
           />
         </div>
         <select
           value={seriesFilter}
           onChange={(e) => setSeriesFilter(e.target.value)}
-          className="px-6 py-3.5 border border-slate-200 rounded-full focus:outline-none focus:border-indigo-500 bg-white"
+          className="px-6 py-3.5 border border-gray-700 rounded-full focus:outline-none focus:border-brand bg-gray-900"
         >
           {seriesOptions.map((s) => (
             <option key={s} value={s}>
@@ -111,7 +111,7 @@ export default function Sermons() {
       </div>
 
       {filteredItems.length === 0 && (
-        <p className="text-center text-slate-500">No sermons match your search.</p>
+        <p className="text-center text-gray-400">No sermons match your search.</p>
       )}
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -121,7 +121,7 @@ export default function Sermons() {
           return (
             <div
               key={i}
-              className="border border-slate-200 rounded-3xl overflow-hidden hover:border-indigo-200 transition-all hover:shadow-xl flex flex-col"
+              className="border border-gray-700 rounded-3xl overflow-hidden hover:border-brand/30 transition-all hover:shadow-xl flex flex-col"
             >
               <button
                 type="button"
@@ -142,7 +142,7 @@ export default function Sermons() {
 
                 {live ? (
                   <span className="absolute bottom-2 right-2 flex items-center gap-1.5 bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                    <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                    <span className="w-2 h-2 rounded-full bg-gray-900 animate-pulse" />
                     LIVE
                   </span>
                 ) : (
@@ -154,16 +154,16 @@ export default function Sermons() {
                 )}
               </button>
               <div className="p-8 flex flex-col flex-1">
-                <div className="uppercase text-indigo-600 text-sm font-medium mb-2">{sermon.series}</div>
+                <div className="uppercase text-brand text-sm font-medium mb-2">{sermon.series}</div>
                 <h3 className="text-2l font-semibold mb-3">{sermon.title}</h3>
-                <p className="text-slate-600 mb-6">
+                <p className="text-gray-300 mb-6">
                   {sermon.speaker} • {sermon.date}
                   {!live && sermon.duration ? ` • ${sermon.duration}` : ''}
                 </p>
                 <button
                   onClick={() => sermon.videoUrl && setPlayingSermon(sermon)}
                   disabled={!sermon.videoUrl}
-                  className="mt-auto bg-indigo-600 text-white px-8 py-3.5 rounded-full hover:bg-indigo-700 transition disabled:bg-slate-300 disabled:cursor-not-allowed self-start"
+                  className="mt-auto bg-brand text-white px-8 py-3.5 rounded-full hover:bg-brand-deep transition disabled:bg-slate-300 disabled:cursor-not-allowed self-start"
                 >
                   {!sermon.videoUrl ? 'Coming Soon' : live ? 'Watch Live' : 'Watch Now'}
                 </button>

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
-const API_URL = 'http://localhost:4000/api';
+const API_URL = '/api';
 const ContentContext = createContext(null);
 
 function handleAuthFailure() {
@@ -78,8 +78,8 @@ export function ContentProvider({ children }) {
     });
     if (res.status === 401) return handleAuthFailure();
     if (!res.ok) throw new Error((await res.json()).error || 'Upload failed');
-    const { url, type } = await res.json();
-    return { url, type: type || 'image' };
+    const data = await res.json();
+    return { url: data.url, type: data.type || 'image' };
   };
 
   return (

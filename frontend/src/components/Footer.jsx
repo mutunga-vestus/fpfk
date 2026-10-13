@@ -34,86 +34,152 @@ function TikTokIcon({ size = 18 }) {
   );
 }
 
+const MAP_EMBED =
+  'https://maps.google.com/maps?q=-1.4734402,36.957585&z=16&hl=en&output=embed';
+const MAP_LINK = 'https://maps.app.goo.gl/3n9i8XAU4nMQEpyR9';
+
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-16">
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-5 gap-10">
-        <div className="lg:col-span-1">
+    <footer className="bg-gray-900 text-gray-300">
+      {/* Top: links & contact */}
+      <div className="max-w-7xl mx-auto px-6 pt-16 pb-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div>
           <div className="flex items-center gap-3 text-white mb-4">
-            <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center font-bold text-2xl">G</div>
+            <div className="w-10 h-10 bg-brand rounded-full flex items-center justify-center font-bold text-2xl">
+              G
+            </div>
             <span className="font-semibold text-2xl">FPFK CHURCH</span>
           </div>
-          <p className="text-sm mb-4">A place of worship, community, and transformation.</p>
-          <div>
-            <h4 className="font-semibold text-white mb-3 text-sm">Follow Us</h4>
-            <div className="flex gap-3">
-              <a href="https://www.instagram.com/fpfkchurch" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram" className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-blue-600 transition-colors">
-                <InstagramIcon size={18} />
-              </a>
-              <a href="https://www.facebook.com/fpfkkitengela.township" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Facebook" className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-blue-600 transition-colors">
-                <FacebookIcon size={18} />
-              </a>
-              <a href="https://www.youtube.com/results?search_query=fpfk+kitengela+township+church" target="_blank" rel="noopener noreferrer" aria-label="Follow us on YouTube" className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-blue-600 transition-colors">
-                <YoutubeIcon size={18} />
-              </a>
-              <a href="https://www.tiktok.com/@fpfkchurch" target="_blank" rel="noopener noreferrer" aria-label="Follow us on TikTok" className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-blue-600 transition-colors">
-                <TikTokIcon size={18} />
-              </a>
-            </div>
+          <p className="text-sm mb-5 text-gray-400">
+            A place of worship, community, and transformation.
+          </p>
+          <h4 className="font-semibold text-white mb-3 text-sm">Follow Us</h4>
+          <div className="flex gap-3">
+            <a
+              href="https://www.instagram.com/fpfkchurch"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-brand transition-colors"
+            >
+              <InstagramIcon size={18} />
+            </a>
+            <a
+              href="https://www.facebook.com/fpfkkitengela.township"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-brand transition-colors"
+            >
+              <FacebookIcon size={18} />
+            </a>
+            <a
+              href="https://www.youtube.com/results?search_query=fpfk+kitengela+township+church"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-brand transition-colors"
+            >
+              <YoutubeIcon size={18} />
+            </a>
+            <a
+              href="https://www.tiktok.com/@fpfkchurch"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TikTok"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-brand transition-colors"
+            >
+              <TikTokIcon size={18} />
+            </a>
           </div>
         </div>
 
         <div>
           <h4 className="font-semibold text-white mb-4">Quick Links</h4>
           <div className="space-y-2 text-sm">
-            <Link to="/about" className="block hover:text-white">About Us</Link>
-            <Link to="/sermons" className="block hover:text-white">Sermons</Link>
-            <Link to="/events" className="block hover:text-white">Events</Link>
+            <Link to="/about" className="block hover:text-white transition-colors">
+              About Us
+            </Link>
+            <Link to="/sermons" className="block hover:text-white transition-colors">
+              Sermons
+            </Link>
+            <Link to="/events" className="block hover:text-white transition-colors">
+              Events
+            </Link>
+            <Link to="/visit" className="block hover:text-white transition-colors">
+              Plan Your Visit
+            </Link>
           </div>
         </div>
 
         <div>
           <h4 className="font-semibold text-white mb-4">Service Times</h4>
-          <div className="space-y-1 text-sm">
-            <p>Sunday Morning: 8:00 AM &amp; 1:00 PM</p>
-            <p>Wednesday Prayer: 7:00 PM</p>
+          <div className="space-y-2 text-sm text-gray-400">
+            <p>
+              <span className="text-gray-300">Sunday</span>
+              <br />
+              8:00 AM &amp; 1:00 PM
+            </p>
+            <p>
+              <span className="text-gray-300">Wednesday Prayer</span>
+              <br />
+              7:00 PM
+            </p>
           </div>
         </div>
 
         <div>
           <h4 className="font-semibold text-white mb-4">Contact</h4>
-          <div className="space-y-1 text-sm">
+          <div className="space-y-2 text-sm text-gray-400">
             <p>Miriam&apos;s Road</p>
             <p>Kitengela, Kajiado County</p>
-            <p>(+254) 798 487 685</p>
-            <p>fpfk@gmail.com</p>
+            <p>
+              <a href="tel:+254798487685" className="hover:text-white transition-colors">
+                (+254) 798 487 685
+              </a>
+            </p>
+            <p>
+              <a href="mailto:fpfk@gmail.com" className="hover:text-white transition-colors">
+                fpfk@gmail.com
+              </a>
+            </p>
           </div>
         </div>
+      </div>
 
-        <div className="md:col-span-2 lg:col-span-1">
-          <h4 className="font-semibold text-white mb-4">Find Us</h4>
-          <div className="rounded-xl overflow-hidden border border-gray-700 h-40 bg-gray-800">
+      {/* Full-width map section */}
+      <div className="max-w-7xl mx-auto px-6 pb-12">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-4">
+          <div>
+            <h4 className="font-semibold text-white text-lg">Find Us</h4>
+            <p className="text-sm text-gray-400 mt-1">Miriam&apos;s Road, Kitengela · Kajiado County</p>
+          </div>
+          <a
+            href={MAP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 self-start sm:self-auto bg-brand hover:bg-brand-deep text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition shadow-sm"
+          >
+            Get directions
+            <span aria-hidden>→</span>
+          </a>
+        </div>
+
+        <div className="relative rounded-2xl overflow-hidden border border-gray-700/80 shadow-xl shadow-black/40 ring-1 ring-white/5">
+          <div className="relative aspect-[16/9] sm:aspect-[21/9] min-h-[220px] max-h-[380px] w-full bg-gray-800">
             <iframe
-              title="FPFK Kitengela location"
-              src="https://www.google.com/maps?q=-1.4734402,36.957585&z=17&output=embed"
-              className="w-full h-full border-0"
+              title="FPFK Kitengela location on Google Maps"
+              src={MAP_EMBED}
+              className="absolute inset-0 w-full h-full border-0"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
             />
           </div>
-          <a
-            href="https://maps.app.goo.gl/6A6MPxf21ByV1KWU9"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block mt-2 text-xs text-blue-400 hover:text-blue-300"
-          >
-            Open in Google Maps →
-          </a>
         </div>
       </div>
 
-      <div className="text-center text-xs mt-12 pt-8 border-t border-gray-800">
+      <div className="text-center text-xs text-gray-500 py-6 border-t border-gray-800">
         © 2026 FPFK Church Kitengela. All rights reserved.
       </div>
     </footer>
